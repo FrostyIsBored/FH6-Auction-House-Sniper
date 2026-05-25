@@ -124,7 +124,7 @@ The bot is ready to go out of the box. If you want to tweak it, open **config.js
 - The overlay is hidden from screen capture, so you can leave it anywhere on screen.
 - Drag the overlay by clicking and holding the header.
 - You won't win every snipe. The bot is limited by FH6's menu animations and the auction server response, same as any other tool.
-
+- If servers are slow / overloaded it will cause the bot to break (Shall have a fix for it soon)
 ---
 
 # Troubleshooting
