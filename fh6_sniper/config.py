@@ -19,6 +19,10 @@ class Config:
     key_hold_ms: tuple = (20, 45)
     between_keys_ms: tuple = (20, 55)
     poll_interval_ms: tuple = (40, 90)
+    # extra ms between selecting Buy Out (Down) and confirming (Enter).
+    # bump if the bot occasionally opens Place Bid instead of Buy Out -
+    # usually means FH6 didn't register the Down before Enter arrived.
+    buyout_select_delay_ms: int = 0
     # timeouts in seconds
     timeout_results_s: float = 12.0
     timeout_outcome_s: float = 25.0

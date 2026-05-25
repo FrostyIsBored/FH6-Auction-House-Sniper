@@ -356,6 +356,8 @@ class Sniper:
         # Don't retry down+enter. A dropped Down leaves Place Bid
         # highlighted, so a retried Enter would bid credits.
         self._press("down")
+        if cfg.buyout_select_delay_ms:
+            self.sleeper(cfg.buyout_select_delay_ms / 1000.0)
         self._press("enter")
         seen = self.wait_for({Screen.BUY_OUT, Screen.PLAYER_OPTIONS}, 2.5)
         if seen == Screen.PLAYER_OPTIONS:
