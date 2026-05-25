@@ -44,7 +44,7 @@ Grab the latest **FH6-Sniper.zip** from the [Releases page](https://github.com/F
 
 # Setup
 
-## Step 1 — Open the Auction House
+## Step 1 - Open the Auction House
 
 Launch Forza Horizon 6 and head into the Auction House at the festival site.
 
@@ -52,7 +52,7 @@ Launch Forza Horizon 6 and head into the Auction House at the festival site.
 
 ---
 
-## Step 2 — Configure your search
+## Step 2 - Configure your search
 
 Open **Search Auctions** and set your filters:
 
@@ -65,7 +65,7 @@ Back out so the screen sits on the **Search config** view. That's where the bot 
 
 ---
 
-## Step 3 — Run the sniper
+## Step 3 - Run the sniper
 
 Double-click **FH6-Sniper.exe**. A small overlay appears in the top-left of your screen.
 
@@ -101,10 +101,10 @@ Windows SmartScreen will warn you because the exe isn't signed. To run anyway:
 
 The bot is ready to go out of the box. If you want to tweak it, open **config.json** (created next to the exe on first run):
 
-- **max_cars** — auto-stop after this many wins (default: 1)
-- **max_minutes** — auto-stop after this many minutes (default: 180)
-- **collect_after_buyout** — set to `false` if you'd rather collect cars manually
-- **notify_sound** / **notify_toast** — turn the win beep or toast off
+- **max_cars** - auto-stop after this many wins (default: 1)
+- **max_minutes** - auto-stop after this many minutes (default: 180)
+- **collect_after_buyout** - set to `false` if you'd rather collect cars manually
+- **notify_sound** / **notify_toast** - turn the win beep or toast off
 
 ---
 
@@ -129,8 +129,10 @@ The bot is ready to go out of the box. If you want to tweak it, open **config.js
 
 # Troubleshooting
 
-**Overlay says "Paused"** — FH6 isn't focused. Click into the game.
+**Overlay says "Paused"** - FH6 isn't focused. Click into the game.
 
-**F8 doesn't do anything** — another app on your PC might be hooking the F8 key. Close it, or change the hotkey in `config.json`.
+**F8 doesn't do anything** - another app on your PC might be hooking the F8 key. Close it, or change the hotkey in `config.json`.
 
-**Bot misses a screen and just sits there** — restart FH6 and the bot. Make sure your graphics preset is **Very Low** and your resolution is **1920 x 1080**.
+**Bot misses a screen and just sits there** - restart FH6 and the bot. Make sure your graphics preset is **Very Low** and your resolution is **1920 x 1080**.
+
+**When posting issues relating to the bot** - Please include your Sniper.log so that I can look into it.
