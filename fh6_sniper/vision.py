@@ -28,7 +28,9 @@ TEMPLATE_SCREENS: dict[str, Screen] = {
     "auction_options.png": Screen.AUCTION_OPTIONS,
     "player_options.png": Screen.PLAYER_OPTIONS,
     "buy_out.png": Screen.BUY_OUT,
+    "buy_out_bgoff.png": Screen.BUY_OUT,
     "buy_out_progress.png": Screen.BUYOUT_PROGRESS,
+    "buy_out_progress_bgoff.png": Screen.BUYOUT_PROGRESS,
     "buyout_successful.png": Screen.BUYOUT_SUCCESS,
     "buyout_failed.png": Screen.BUYOUT_FAILED,
     "claim_car.png": Screen.CLAIM_CAR,
@@ -122,8 +124,10 @@ TEMPLATE_REGIONS = {
     "no_auctions.png":        (1113, 434, 1706, 690),
     "auction_options.png":    (546, 276, 1374, 526),
     "player_options.png":     (580, 230, 1340, 486),
-    "buy_out.png":            (520, 470, 1400, 620),
-    "buy_out_progress.png":   (520, 470, 1400, 620),
+    "buy_out.png":               (520, 470, 1400, 620),
+    "buy_out_bgoff.png":         (520, 470, 1400, 620),
+    "buy_out_progress.png":      (520, 470, 1400, 620),
+    "buy_out_progress_bgoff.png":(520, 470, 1400, 620),
     "buyout_successful.png":  (539, 334, 1374, 612),
     "buyout_failed.png":      (546, 378, 1374, 631),
     "claim_car.png":          (538, 359, 1374, 615),
@@ -134,7 +138,10 @@ TEMPLATE_REGIONS = {
 # Templates that must be matched at full resolution. The buy_out body and
 # buy_out_progress body are short text-band crops; half-res blurs the text
 # enough that live frames drop below the 0.80 threshold (~0.78 vs ~0.86).
-_FULL_RES_TEMPLATES = {"buy_out.png", "buy_out_progress.png"}
+_FULL_RES_TEMPLATES = {
+    "buy_out.png", "buy_out_bgoff.png",
+    "buy_out_progress.png", "buy_out_progress_bgoff.png",
+}
 
 
 def screen_scores(scene_bgr, templates: dict, targets=None) -> dict:
