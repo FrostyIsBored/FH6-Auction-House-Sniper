@@ -258,16 +258,20 @@ class Sniper:
 
     def _escape_player_options(self) -> str:
         """ESC out of the Player Options menu a sold car can open. ESCs
-        even from UNKNOWN screens; stops at AH_LANDING."""
-        self._status("Car sold, backing out")
+        even from UNKNOWN screens; stops at AH_LANDING.
+
+        Returns "no_cars" - the car was sold before we could snipe it,
+        which is a missed-search, not a failed buyout.
+        """
+        self._status("Listing already sold, skipping")
         for _ in range(6):
             if self._stop:
                 return "recover_failed"
             if self.io.screen() == Screen.AH_LANDING:
-                return "failed"
+                return "no_cars"
             self._press("esc")
             self.sleeper(0.6)
-        return "failed"
+        return "no_cars"
 
     def _collect(self) -> None:
         """Collect a won car. The Claim Car popup has two stages that both
