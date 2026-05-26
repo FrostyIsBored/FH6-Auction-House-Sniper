@@ -145,3 +145,22 @@ The bot is ready to go out of the box. If you want to tweak it, open **config.js
 **Bot misses a screen and just sits there** - restart FH6 and the bot. Make sure your graphics preset is **Very Low** and your resolution is **1920 x 1080**.
 
 **When posting issues relating to the bot** - Please include your Sniper.log so that I can look into it.
+
+  **The sniper opens the Buy Out dialog but won't click Yes.**
+  <img width="1513" height="840" alt="image" src="https://github.com/user-attachments/assets/61472f11-389c-47f9-90e3-197530331486" />
+
+
+  Almost always a mismatch between FH6's **Moving Background** video setting and the sniper's. If you've turned moving backgrounds off in-game, open the **Settings** tab in  the overlay and untick **Moving background mode** so the sniper loads the right templates for your setup.
+
+  <img width="331" height="472" alt="image" src="https://github.com/user-attachments/assets/049c4dab-a718-4cab-882e-d45782f5391c" />
+
+
+  **The sniper says "Stopped: could not recover" right after Start.**
+
+  Two common causes:
+
+  - **Game language is not English.** The sniper's templates only match the English UI.
+  Switch FH6 to English under Settings > Language Select.
+  - **Capturable overlay sitting over the menus.** If you've enabled **Show overlay in screenshots & recordings**, the overlay can land on top of the area the sniper is reading. Drag it to the top-right or bottom-right corner so it doesn't overlap the game UI.
+
+  If neither helps, [open an issue](https://github.com/FrostyIsBored/FH6-Auction-House-Sniper/issues) or message me on Discord.
