@@ -2,6 +2,11 @@
 
 Newest changes first. Each section header is the release date.
 
+## v1.1.1 - 2026-05-27
+
+### Sold-listing detection fix
+The bot was occasionally still trying to buy listings that had just sold - it would land on the View Seller / View Highest Bidder menu before backing out, wasting a cycle. Root cause: with moving background on, the bright FH6 menu scene showing through empty slots was being mistaken for a card. Detection now looks for the pure-white card UI body specifically, which the game's background scene never produces. The bot will correctly skip sold listings instead of stumbling into the wrong menu.
+
 ## v1.1.0 - 2026-05-26
 
 ### Settings panel
