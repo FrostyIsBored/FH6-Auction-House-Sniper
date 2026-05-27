@@ -226,6 +226,15 @@ SOLD_HSV_LOWER = (20, 120, 120)
 SOLD_HSV_UPPER = (34, 255, 255)
 SOLD_STAMP_REGION = (90, 185, 300, 295)
 
+# A populated card has a digitally-rendered white UI body that produces
+# pixels with high V and very low S. The FH6 moving-background scene shown
+# through an empty slot is bright but never that pure - everything is tinted,
+# textured, or has a colour cast. Counting these "pure-white" pixels gives a
+# clean separator that works whether moving_background is on or off.
+SLOT_POPULATED_WHITE_V_MIN = 230
+SLOT_POPULATED_WHITE_S_MAX = 25
+SLOT_POPULATED_WHITE_MIN = 30      # min pixels matching the above per slot
+
 
 def is_card_sold(scene_bgr, region=SOLD_STAMP_REGION) -> bool:
     """True if the top result card shows the yellow SOLD stamp."""
@@ -247,19 +256,32 @@ SOLD_STAMP_REGIONS = (
 )
 
 
+def slot_states(scene_bgr) -> tuple:
+    """Per-slot (sold, populated) flags for the four result slots."""
+    hsv = cv2.cvtColor(scene_bgr, cv2.COLOR_BGR2HSV)
+    sold_mask = cv2.inRange(hsv,
+                            np.array(SOLD_HSV_LOWER, np.uint8),
+                            np.array(SOLD_HSV_UPPER, np.uint8))
+    sat = hsv[:, :, 1]
+    val = hsv[:, :, 2]
+    out = []
+    for (x1, y1, x2, y2) in SOLD_STAMP_REGIONS:
+        sold = int(cv2.countNonZero(sold_mask[y1:y2, x1:x2])) > 800
+        white = ((val[y1:y2, x1:x2] >= SLOT_POPULATED_WHITE_V_MIN)
+                 & (sat[y1:y2, x1:x2] <= SLOT_POPULATED_WHITE_S_MAX))
+        populated = int(white.sum()) > SLOT_POPULATED_WHITE_MIN
+        out.append((sold, populated))
+    return tuple(out)
+
+
 def sold_slots(scene_bgr) -> tuple:
     """Per-slot SOLD flags for the four result slots."""
-    hsv = cv2.cvtColor(scene_bgr, cv2.COLOR_BGR2HSV)
-    mask = cv2.inRange(hsv,
-                       np.array(SOLD_HSV_LOWER, np.uint8),
-                       np.array(SOLD_HSV_UPPER, np.uint8))
-    return tuple(int(cv2.countNonZero(mask[y1:y2, x1:x2])) > 800
-                 for (x1, y1, x2, y2) in SOLD_STAMP_REGIONS)
+    return tuple(sold for sold, _populated in slot_states(scene_bgr))
 
 
 def first_buyable_slot(scene_bgr) -> int:
-    """1-indexed first non-sold slot, or 0 if all four are sold."""
-    for i, sold in enumerate(sold_slots(scene_bgr), start=1):
-        if not sold:
+    """1-indexed first slot that is populated and not sold, or 0 if none."""
+    for i, (sold, populated) in enumerate(slot_states(scene_bgr), start=1):
+        if populated and not sold:
             return i
     return 0

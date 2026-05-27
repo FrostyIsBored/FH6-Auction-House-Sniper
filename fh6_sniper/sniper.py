@@ -3,7 +3,7 @@ from __future__ import annotations
 import logging
 import random
 import time
-from . import actions, capture, vision
+from . import actions, capture, debug_dump, vision
 from .vision import Screen
 
 log = logging.getLogger("fh6.sniper")
@@ -20,6 +20,10 @@ class GameIO:
         self.cfg = cfg
         self.templates = templates
         self._last_screen = None
+        # Cached most-recent frame from first_buyable_slot. Used by the dev
+        # debug-dump path so it can persist the exact pixels the bot decided
+        # on, not a re-grabbed frame from a slightly later moment.
+        self._last_slot_frame = None
 
     def screen(self, targets=None) -> Screen:
         """Identify the current screen. If `targets` is a set of Screen,
@@ -50,6 +54,7 @@ class GameIO:
 
     def first_buyable_slot(self) -> int:
         frame = capture.grab_screen(self.cfg.window_title)
+        self._last_slot_frame = frame
         return vision.first_buyable_slot(frame)
 
     def press(self, name: str, times: int = 1) -> None:
@@ -389,6 +394,14 @@ class Sniper:
             self._status("Listing sold during navigation, skipping")
             self._back_to_landing(known=result)
             return "no_cars"
+
+        if debug_dump.enabled(cfg):
+            frame = getattr(self.io, "_last_slot_frame", None)
+            states = vision.slot_states(frame) if frame is not None else None
+            debug_dump.dump(cfg, frame, "pre_y", metadata={
+                "slot": slot,
+                "slot_states": [list(s) for s in states] if states else None,
+            })
 
         seen = self._press_until(
             "y", Screen.RESULTS_HAS_CARS,
