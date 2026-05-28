@@ -155,31 +155,50 @@ class Sniper:
         return False
 
     def _try_toggle_moving_background(self) -> bool:
-        """Auto-toggle moving_background and reload templates in place.
+        """Auto-toggle moving_background after verifying the other variant
+        actually matches the current frame.
 
-        Fires when the buy_out wait_for has timed out - that template pair
-        is the only BG-sensitive one, so a stuck confirm dialog is almost
-        always a flag mismatch. Returns True if the toggle ran (caller
-        should retry the screen check); False if already attempted this
-        session, in which case the caller should fall through to the
-        normal recovery path."""
+        Fires when the buy_out wait_for has timed out. The buy_out and
+        buy_out_progress templates are the only BG-sensitive ones, but a
+        timeout can also be caused by a slow render or transient hiccup -
+        not always a BG mismatch. To avoid corrupting the user's config
+        on those false alarms, this loads the opposite-flag templates and
+        runs identify_screen against a fresh frame. Only commits the swap
+        (replace io.templates, save config, set one-shot guard) when the
+        alternate variant actually identifies BUY_OUT or PLAYER_OPTIONS.
+
+        Returns True if the swap committed (caller should retry the wait);
+        False if already attempted this session OR the alternate variant
+        also doesn't match (in which case fall through to recovery)."""
         if self._auto_bg_toggled:
             return False
         cfg = self.cfg
         new_value = not cfg.moving_background
         try:
-            new_templates = vision.load_templates(
+            candidate = vision.load_templates(
                 paths.app_dir() / cfg.template_dir,
                 moving_background=new_value)
-            self.io.templates = new_templates
-            cfg.moving_background = new_value
+        except Exception:
+            log.exception("auto-toggle: failed to load alternate templates")
+            return False
+        frame = capture.grab_screen(cfg.window_title)
+        result = vision.identify_screen(
+            frame, candidate, cfg.match_threshold,
+            targets={Screen.BUY_OUT, Screen.PLAYER_OPTIONS})
+        if result not in (Screen.BUY_OUT, Screen.PLAYER_OPTIONS):
+            log.info("auto-toggle skipped: alternate variant also doesn't "
+                     "match - timeout not caused by BG mismatch")
+            return False
+        self.io.templates = candidate
+        cfg.moving_background = new_value
+        try:
             save_config(cfg, paths.app_dir() / "config.json")
         except Exception:
-            log.exception("auto-toggle moving_background failed")
-            return False
+            log.exception("auto-toggle: save_config failed (runtime swap "
+                          "stays, persistence didn't)")
         self._auto_bg_toggled = True
         log.info("auto-toggle moving_background -> %s "
-                 "(buy_out wait timed out; templates reloaded, "
+                 "(verified against frame; templates swapped, "
                  "saved to config.json)", new_value)
         self._status(f"Auto-toggled moving background -> {new_value}")
         return True
