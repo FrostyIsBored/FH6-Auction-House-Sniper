@@ -59,6 +59,7 @@ class Config:
     # global hotkeys (pynput format)
     hotkey_start_stop: str = "<f8>"
     hotkey_panic: str = "<f9>"
+    win32_api_input: bool = False
 
     def effective_lime_bounds(self) -> tuple:
         """Return the (lower, upper) HSV bounds to use right now."""

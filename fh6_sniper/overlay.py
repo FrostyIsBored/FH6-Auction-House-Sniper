@@ -27,6 +27,7 @@ _SETTINGS_FIELDS = (
     ("FEEDBACK",         "notify_toast",           "Windows toast on success",           "bool", None),
     ("FEEDBACK",         "hdr_mode",               "HDR mode (widens lime detection)",   "bool", None),
     ("FEEDBACK",         "overlay_capturable",     "Show overlay in screenshots & recordings", "bool", None),
+    ("FEEDBACK",         "win32_api_input",        "Win32 API input (background key presses)", "bool", None),
     ("SNIPER BEHAVIOUR", "match_threshold",        "Match threshold",        "slider", (0.50, 1.00, 0.01)),
     ("SNIPER BEHAVIOUR", "loop_pace_s",            "Loop pace (seconds)",    "float",  None),
     ("SNIPER BEHAVIOUR", "buyout_select_delay_ms", "Buyout select delay (ms)", "int",  None),

@@ -61,7 +61,8 @@ class GameIO:
     def press(self, name: str, times: int = 1) -> None:
         log.info("press %s%s", name, f" x{times}" if times > 1 else "")
         actions.tap_key(name, times,
-                        self.cfg.key_hold_ms, self.cfg.between_keys_ms)
+                        self.cfg.key_hold_ms, self.cfg.between_keys_ms,
+                        use_win32=self.cfg.win32_api_input)
 
 
 class Sniper:
@@ -112,6 +113,8 @@ class Sniper:
     def _guard_focus(self) -> None:
         """Block until FH6 is the foreground window. Sets the Paused status
         once on entry, not on every tick."""
+        if self.cfg.win32_api_input:
+            return
         if self.io.focused():
             return
         self._status("Paused: FH6 not focused")
