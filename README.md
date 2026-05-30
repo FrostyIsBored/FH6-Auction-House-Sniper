@@ -1,4 +1,4 @@
- [![Consider Supporting me by donating to my ko-fi (100% optional, please dont feel pressured to do so) ](https://img.shields.io/badge/Support_on-Ko--fi-FF5E5B?logo=ko-fi&logoColor=white)](https://ko-fi.com/frostyisbored)
+[![Support on Ko-fi](https://img.shields.io/badge/Support_on-Ko--fi-FF5E5B?logo=ko-fi&logoColor=white)](https://ko-fi.com/frostyisbored) [![Need help? Join the Discord](https://img.shields.io/badge/Need_help%3F-Join_the_Discord-5865F2?logo=discord&logoColor=white)](https://discord.gg/PWPmVWdP8r)
 # FH6 Auction House Sniper
 
 ## Automated auction house sniper for Forza Horizon 6
@@ -22,6 +22,12 @@ Watches the Auction House for the car you set up, buys it out the instant it app
 - F8 start/stop, F9 panic stop
 - Auto-stops after a set number of cars or minutes
 - Smart page awareness to stop accidental misclicks to other pages
+
+---
+
+# Support
+
+If you run into any issues and need help, feel free to join the Support Server and create a Post in #Get-Help and I'll take a look. https://discord.gg/PWPmVWdP8r
 
 ---
 
