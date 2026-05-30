@@ -35,6 +35,7 @@ Watches the Auction House for the car you set up, buys it out the instant it app
 - UI scaling set to **100**
 - Game Language set to English
 - Keyboard menu navigation (the bot uses keys, not the mouse)
+- If your forza has been launched with elevated permissions, youll need to launch the bot as an Administrator (Right click + Run as admin)
 - Wired ethernet strongly recommended
 
 <img width="1386" height="763" alt="image-4" src="https://github.com/user-attachments/assets/fd2bf173-259f-4458-938b-2267144ce3ab" />
