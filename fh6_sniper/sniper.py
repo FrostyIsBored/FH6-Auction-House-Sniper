@@ -508,16 +508,18 @@ class Sniper:
         if cfg.buyout_select_delay_ms:
             self.sleeper(cfg.buyout_select_delay_ms / 1000.0)
         self._press("enter")
-        # Tight 1.0s wait: typical BUY_OUT dialog render is 200-400ms so
-        # 1.0s is ~3x margin while shaving 1.5s off the wasted time
-        # whenever the moving_background flag is wrong and the templates
-        # never match.
-        seen = self.wait_for({Screen.BUY_OUT, Screen.PLAYER_OPTIONS}, 1.0)
+        # Wait for the BUY_OUT confirmation dialog. FE / special-edition cars
+        # can have longer post-press render times than standard listings, so
+        # we use timeout_generic_s (default 10s) instead of a tight fixed
+        # budget. The moving_background auto-toggle still fires on a miss and
+        # retries with the same generous window.
+        seen = self.wait_for({Screen.BUY_OUT, Screen.PLAYER_OPTIONS},
+                             cfg.timeout_generic_s)
         if seen == Screen.PLAYER_OPTIONS:
             return self._escape_player_options()
         if seen is None and self._try_toggle_moving_background():
             seen = self.wait_for(
-                {Screen.BUY_OUT, Screen.PLAYER_OPTIONS}, 1.0)
+                {Screen.BUY_OUT, Screen.PLAYER_OPTIONS}, cfg.timeout_generic_s)
             if seen == Screen.PLAYER_OPTIONS:
                 return self._escape_player_options()
         if seen is None:
