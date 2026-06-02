@@ -53,6 +53,10 @@ class GameIO:
         frame = capture.grab_screen(self.cfg.window_title)
         return vision.first_buyable_slot(frame)
 
+    def first_non_sold_slot(self) -> int:
+        frame = capture.grab_screen(self.cfg.window_title)
+        return vision.first_non_sold_slot(frame)
+
     def slot_states(self) -> tuple:
         """Per-slot (sold, populated) flags. Used by the render-wait gate."""
         frame = capture.grab_screen(self.cfg.window_title)
@@ -477,9 +481,16 @@ class Sniper:
         # Wait for at least one populated card before checking slot state,
         # otherwise first_buyable_slot returns 0 on an unrendered frame and
         # the bot falsely reports 'all sold'.
-        self._wait_for_populated_slots(1.5)
+        populated_seen = self._wait_for_populated_slots(1.5)
 
         slot = self.io.first_buyable_slot()
+        if slot == 0 and not populated_seen:
+            # The white-pixel populated check timed out - the card thumbnail
+            # area likely contains no pure-white pixels (it's a car photo).
+            # Fall back to the sold-stamp-only check: find the first slot
+            # that does not show a yellow SOLD overlay.
+            log.info("populated check timed out; falling back to first_non_sold_slot")
+            slot = self.io.first_non_sold_slot()
         if slot == 0:
             self._status("All listings sold, skipping")
             self._back_to_landing(known=result)

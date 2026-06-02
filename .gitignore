@@ -6,6 +6,7 @@ venv/
 env/
 build/
 dist/
+*.exe
 *.spec
 *.egg-info/
 .idea/

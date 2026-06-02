@@ -231,9 +231,22 @@ SOLD_STAMP_REGION = (90, 185, 300, 295)
 # through an empty slot is bright but never that pure - everything is tinted,
 # textured, or has a colour cast. Counting these "pure-white" pixels gives a
 # clean separator that works whether moving_background is on or off.
+#
+# IMPORTANT: sample the card's text/info panel (x: 350-700), NOT the
+# thumbnail (x: 90-300). Forza Edition cards have coloured gradient
+# thumbnails, so sampling the thumbnail would never find pure-white pixels.
 SLOT_POPULATED_WHITE_V_MIN = 230
 SLOT_POPULATED_WHITE_S_MAX = 25
 SLOT_POPULATED_WHITE_MIN = 30      # min pixels matching the above per slot
+
+# Per-slot regions for the populated (white panel) check. Same y-ranges as
+# SOLD_STAMP_REGIONS but shifted right into the white info panel.
+SLOT_POPULATED_REGIONS = (
+    (350, 185, 700, 295),
+    (350, 387, 700, 497),
+    (350, 589, 700, 699),
+    (350, 791, 700, 901),
+)
 
 
 def is_card_sold(scene_bgr, region=SOLD_STAMP_REGION) -> bool:
@@ -265,10 +278,11 @@ def slot_states(scene_bgr) -> tuple:
     sat = hsv[:, :, 1]
     val = hsv[:, :, 2]
     out = []
-    for (x1, y1, x2, y2) in SOLD_STAMP_REGIONS:
-        sold = int(cv2.countNonZero(sold_mask[y1:y2, x1:x2])) > 800
-        white = ((val[y1:y2, x1:x2] >= SLOT_POPULATED_WHITE_V_MIN)
-                 & (sat[y1:y2, x1:x2] <= SLOT_POPULATED_WHITE_S_MAX))
+    for (x1s, y1s, x2s, y2s), (x1p, y1p, x2p, y2p) in zip(
+            SOLD_STAMP_REGIONS, SLOT_POPULATED_REGIONS):
+        sold = int(cv2.countNonZero(sold_mask[y1s:y2s, x1s:x2s])) > 800
+        white = ((val[y1p:y2p, x1p:x2p] >= SLOT_POPULATED_WHITE_V_MIN)
+                 & (sat[y1p:y2p, x1p:x2p] <= SLOT_POPULATED_WHITE_S_MAX))
         populated = int(white.sum()) > SLOT_POPULATED_WHITE_MIN
         out.append((sold, populated))
     return tuple(out)
@@ -283,5 +297,17 @@ def first_buyable_slot(scene_bgr) -> int:
     """1-indexed first slot that is populated and not sold, or 0 if none."""
     for i, (sold, populated) in enumerate(slot_states(scene_bgr), start=1):
         if populated and not sold:
+            return i
+    return 0
+
+
+def first_non_sold_slot(scene_bgr) -> int:
+    """1-indexed first slot that is not sold, ignoring the populated check.
+
+    Used as a fallback when the white-pixel populated detection times out
+    (e.g. because the card thumbnail fills the sampled region and contains
+    no pure-white pixels). Returns 0 if all sampled slots appear sold."""
+    for i, (sold, _populated) in enumerate(slot_states(scene_bgr), start=1):
+        if not sold:
             return i
     return 0
