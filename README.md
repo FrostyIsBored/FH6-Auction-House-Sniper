@@ -5,7 +5,7 @@
 >
 > I'll keep this free version maintained with **bug fixes** and patches for game updates.
 >
-> **V2** is the rebuilt, actively-developed release — built for **optimization, speed and more reliable sniping**, with a refreshed overlay and an **auto-updating launcher** that always keeps you on the latest build. If you want the best performance, grab it at **[fh6sniper.com](https://fh6sniper.com)**.
+> **V2** is the rebuilt, optimized version of the sniper, **faster and more reliable**, with a refreshed overlay and an **auto-updating launcher** that always keeps you on the latest build. Want the best performance? Grab it at **[fh6sniper.com](https://fh6sniper.com/)**.
 >
 > <img width="459" height="508" alt="ui-full-preview" src="https://github.com/user-attachments/assets/6428d0f9-47a4-4823-8cb8-aada581304a8" />
 
