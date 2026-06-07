@@ -1,14 +1,25 @@
 [![Support on Ko-fi](https://img.shields.io/badge/Support_on-Ko--fi-FF5E5B?logo=ko-fi&logoColor=white)](https://ko-fi.com/frostyisbored) [![Need help? Join the Discord](https://img.shields.io/badge/Need_help%3F-Join_the_Discord-5865F2?logo=discord&logoColor=white)](https://discord.gg/PWPmVWdP8r)
 # FH6 Auction House Sniper
 
+> ### ⚡ This is the free version — for the optimized build, check out [**FH6 Sniper V2**](https://fh6sniper.com)
+>
+> I'll keep this free version maintained with **bug fixes** and patches for game updates.
+>
+> **V2** is the rebuilt, actively-developed release — built for **optimization, speed and more reliable sniping**, with a refreshed overlay and an **auto-updating launcher** that always keeps you on the latest build. If you want the best performance, grab it at **[fh6sniper.com](https://fh6sniper.com)**.
+> <img width="459" height="508" alt="ui-full-preview" src="https://github.com/user-attachments/assets/6428d0f9-47a4-4823-8cb8-aada581304a8" />
+
+
+---
+<img width="1655" height="792" alt="image-3" src="https://github.com/user-attachments/assets/61b58048-c3e6-4156-9510-0c2600aa7e9f" />
+<img width="340" height="488" alt="image" src="https://github.com/user-attachments/assets/d594b885-9e5d-4519-bbea-182a3d99999b" />
+
+
+
 ## Automated auction house sniper for Forza Horizon 6
 
 Watches the Auction House for the car you set up, buys it out the instant it appears, collects it, and loops. Set your filters once and leave it running. This tool has about a 10% buyout rate, and generally can snipe a car in under 5 mins.
 
 
-
-<img width="1655" height="792" alt="image-3" src="https://github.com/user-attachments/assets/61b58048-c3e6-4156-9510-0c2600aa7e9f" />
-<img width="340" height="488" alt="image" src="https://github.com/user-attachments/assets/d594b885-9e5d-4519-bbea-182a3d99999b" />
 
 
 ---
