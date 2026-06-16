@@ -1,4 +1,4 @@
-[![Support on Ko-fi](https://img.shields.io/badge/Support_on-Ko--fi-FF5E5B?logo=ko-fi&logoColor=white)](ko-fi.com/akacurtis) [![Need help? Join the Discord](https://img.shields.io/badge/Need_help%3F-Join_the_Discord-5865F2?logo=discord&logoColor=white)](https://discord.gg/PWPmVWdP8r)
+[![Support on Ko-fi](https://img.shields.io/badge/Support_on-Ko--fi-FF5E5B?logo=ko-fi&logoColor=white)](https://ko-fi.com/akacurtis) [![Need help? Join the Discord](https://img.shields.io/badge/Need_help%3F-Join_the_Discord-5865F2?logo=discord&logoColor=white)](https://discord.gg/PWPmVWdP8r)
 # FH6 Auction House Sniper
 
 ## Automated auction house sniper for Forza Horizon 6
